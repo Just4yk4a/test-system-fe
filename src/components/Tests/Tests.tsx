@@ -4,9 +4,10 @@ import {makeStyles} from "@material-ui/core/styles";
 import {AddBox} from "@material-ui/icons";
 import TestsList from "../TestsList/TestsList";
 import {Link, useRouteMatch} from "react-router-dom";
+import {Survey} from "../../entity/entities";
 
 interface Props {
-    tests: string[]
+    tests: Survey[]
     canEdit: boolean;
 }
 

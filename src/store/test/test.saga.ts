@@ -1,12 +1,19 @@
 import {call, put, takeLatest} from 'redux-saga/effects'
-import {Survey} from "../../entity/entities";
+import {Survey, TestVO} from "../../entity/entities";
 import {TestActionTypes} from "./test.action";
 import {testService} from "../../service/test.service";
 
 function* getTests(action: any) {
     try {
-        const test: Survey[] = yield call(testService.getTests);
-        yield put({type: TestActionTypes.SET_TESTS, payload: test});
+        const testVOs: TestVO[] = yield call(testService.getTests);
+        const tests: Survey[] = testVOs.map(test => {
+            const survey = new Survey();
+            survey.id = test.id;
+            survey.title = test.name;
+            survey.questions = JSON.parse(test.json);
+            return survey;
+        });
+        yield put({type: TestActionTypes.SET_TESTS, payload: tests});
     } catch (e) {
         console.error(e);
     }
@@ -19,7 +26,7 @@ function* saveTest(action: any) {
             name: action.payload.name,
             json: JSON.stringify(action.payload.questions),
         };
-        const newTest: Survey = yield call(testService.createTest, test);
+        yield call(testService.createTest, test);
         yield put({type: TestActionTypes.GET_TESTS_REQUEST});
     } catch (e) {
         console.error(e);

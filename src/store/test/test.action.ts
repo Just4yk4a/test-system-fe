@@ -1,4 +1,4 @@
-import Test = jest.Test;
+import {Survey} from "../../entity/entities";
 
 export enum TestActionTypes {
     GET_TESTS_REQUEST = 'GET_TESTS_REQUEST',
@@ -11,4 +11,4 @@ export enum TestActionTypes {
 }
 
 export const getTestsRequest = () => ({type: TestActionTypes.GET_TESTS_REQUEST, payload: null});
-export const saveTestRequest = (test: Test) => ({type: TestActionTypes.SAVE_TEST_REQUEST, payload: test});
+export const saveTestRequest = (test: Survey) => ({type: TestActionTypes.SAVE_TEST_REQUEST, payload: test});

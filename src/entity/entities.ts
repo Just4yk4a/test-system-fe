@@ -13,6 +13,12 @@ export class User {
     role: Role | null = null;
 }
 
+export class TestVO {
+    id: number | null = null;
+    name: string = '';
+    json: string = '';
+}
+
 export class Question {
     title: string = '';
     type: QuestionType = QuestionType.radio;

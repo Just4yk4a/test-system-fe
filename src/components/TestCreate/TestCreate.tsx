@@ -12,9 +12,10 @@ import {
     TextField
 } from "@material-ui/core";
 import {AddBox, Remove} from "@material-ui/icons";
-import {Question, QuestionType} from "../../entity/entities";
+import {Question, QuestionType, Survey} from "../../entity/entities";
 
 interface Props {
+    onSave: (survey: Survey) => void;
 }
 
 const useStyles = makeStyles((theme) => ({

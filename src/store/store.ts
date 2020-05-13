@@ -4,14 +4,15 @@ import {all} from 'redux-saga/effects';
 import TeacherSaga from "./teacher/teacher.saga";
 import createSagaMiddleware from 'redux-saga'
 import logger from 'redux-logger'
-import { connectRouter, routerMiddleware, RouterState } from 'connected-react-router'
+import {connectRouter, routerMiddleware, RouterState} from 'connected-react-router'
 import * as History from 'history'
-import axios from 'axios';
-import {AxiosResponse} from "axios";
+import axios, {AxiosResponse} from 'axios';
 import {userReducer, UserState} from "./user/user.reducer";
 import UserSaga from "./user/user.saga";
 import {studentReducer, StudentState} from "./student/student.reducer";
 import StudentSaga from "./student/student.saga";
+import {testReducer, TestState} from "./test/test.reducer";
+import TestSaga from "./test/test.saga";
 
 export const history = History.createBrowserHistory();
 
@@ -19,6 +20,7 @@ export interface State {
     teacherState: TeacherState;
     studentState: StudentState;
     userState: UserState;
+    testState: TestState;
     router: RouterState,
 }
 
@@ -26,11 +28,12 @@ export const reducers = combineReducers<State>({
     teacherState: teacherReducer,
     studentState: studentReducer,
     userState: userReducer,
+    testState: testReducer,
     router: connectRouter(history)
 });
 
 function* sagas() {
-    yield all([TeacherSaga(), StudentSaga(), UserSaga()])
+    yield all([TeacherSaga(), StudentSaga(), UserSaga(), TestSaga()])
 }
 
 

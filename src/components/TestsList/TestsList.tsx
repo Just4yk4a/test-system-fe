@@ -3,9 +3,10 @@ import {IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from 
 import DeleteIcon from '@material-ui/icons/Delete';
 import {makeStyles} from "@material-ui/core/styles";
 import {Edit, PlayArrow} from "@material-ui/icons";
+import {Survey} from "../../entity/entities";
 
 interface Props {
-    tests: string[];
+    tests: Survey[];
     canEdit: boolean;
 }
 
@@ -32,7 +33,7 @@ export default function TestsList(props: Props) {
                     props.tests.map(item =>
                         <ListItem>
                             <ListItemText
-                                primary={item}
+                                primary={item.title}
                             />
                             <ListItemSecondaryAction>
                                 {
