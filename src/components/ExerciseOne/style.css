@@ -1,0 +1,16 @@
+.task {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.content {
+}
+
+.list {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.list > button {
+  display: block;
+}
