@@ -23,7 +23,7 @@ export class Question {
     title: string = '';
     type: QuestionType = QuestionType.radio;
     choices: string[] = [];
-    correctAnswer: string = '';
+    correctAnswerIndexes: number[] = [];
 }
 
 export class Survey {

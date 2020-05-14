@@ -38,6 +38,9 @@ export default function TestCreate(props: Props) {
         const newQuestions = [...questions];
         const question = newQuestions[questionIndex];
         question.type = question.type === QuestionType.checkbox ? QuestionType.radio : QuestionType.checkbox;
+        if (question.type === QuestionType.radio && question.correctAnswerIndexes.length > 1) {
+            question.correctAnswerIndexes = [question.correctAnswerIndexes[0]];
+        }
         setQuestions(newQuestions);
     };
 
@@ -46,6 +49,7 @@ export default function TestCreate(props: Props) {
         question.title = 'Question title';
         question.type = QuestionType.radio;
         question.choices = ['First choice'];
+        question.correctAnswerIndexes = [];
 
         setQuestions([...questions, question]);
     };
@@ -54,15 +58,18 @@ export default function TestCreate(props: Props) {
         const newQuestions = [...questions];
         const question = newQuestions[questionIndex];
         question.choices.splice(choiceIndex, 0, question.choices[choiceIndex]);
-        newQuestions.splice(questionIndex, 1, question)
+        newQuestions.splice(questionIndex, 1, question);
         setQuestions(newQuestions);
     };
 
-    const removeChoice = (questionIndex: number, choiceIndex: number) => {
+    const onRemoveChoice = (questionIndex: number, choiceIndex: number) => {
         const newQuestions = [...questions];
         const question = newQuestions[questionIndex];
         question.choices.splice(choiceIndex, 1);
-        newQuestions.splice(questionIndex, 1, question)
+        if (question.correctAnswerIndexes.includes(choiceIndex)) {
+            question.correctAnswerIndexes.splice(question.correctAnswerIndexes.indexOf(choiceIndex), 1);
+        }
+        newQuestions.splice(questionIndex, 1, question);
         setQuestions(newQuestions);
     };
 
@@ -70,20 +77,51 @@ export default function TestCreate(props: Props) {
         const newQuestions = [...questions];
         const question = newQuestions[questionIndex];
         question.choices.splice(choiceIndex, 1, event.target.value);
-        questions.splice(questionIndex, 1, question)
+        questions.splice(questionIndex, 1, question);
         setQuestions(newQuestions);
     };
 
-    const onSaveHndler = () => {
+    const onSetCorrectAnswer = (questionIndex: number, choiceIndex: number) => {
+        const newQuestions = [...questions];
+        const question = newQuestions[questionIndex];
+        if (question.type === QuestionType.checkbox) {
+            if (question.correctAnswerIndexes.includes(choiceIndex)) {
+                question.correctAnswerIndexes.splice(question.correctAnswerIndexes.indexOf(choiceIndex), 1);
+            } else {
+                question.correctAnswerIndexes.push(choiceIndex);
+            }
+        } else {
+            question.correctAnswerIndexes = [choiceIndex];
+        }
+        questions.splice(questionIndex, 1, question);
+        setQuestions(newQuestions);
+    };
 
+    const onTitleChange = (e: any) => {
+        setTitle(e.target.value);
+    };
+
+    const onQuestionTitleChange = (e: any, questionIndex: number) => {
+        const newQuestions = [...questions];
+        const question = newQuestions[questionIndex];
+        question.title = e.target.value;
+        questions.splice(questionIndex, 1, question);
+        setQuestions(newQuestions);
+    };
+
+    const onSaveHandler = () => {
+        const test: Survey = new Survey();
+        test.title = title;
+        test.questions = questions;
+        props.onSave(test);
     };
 
     return (
         <div className={classes.root}>
-            <h1>Создание тестов: </h1>
+            <h1>Test create: </h1>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <TextField id="standard-basic" label="Survey title"/>
+                    <TextField id="standard-basic" label="Survey title" onChange={onTitleChange}/>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -91,7 +129,8 @@ export default function TestCreate(props: Props) {
                         questions.map((question, qIndex) =>
                             <Grid item xs container direction="column" spacing={2}>
                                 <div>
-                                    <TextField id="standard-basic" label="Question tittle"/>
+                                    <TextField id="standard-basic" label="Question tittle"
+                                               onChange={(event) => onQuestionTitleChange(event, qIndex)}/>
                                 </div>
                                 <FormControlLabel
                                     control={<Switch checked={question.type === QuestionType.checkbox}
@@ -104,14 +143,14 @@ export default function TestCreate(props: Props) {
                                             {
                                                 question.type === QuestionType.checkbox ?
                                                     <Checkbox
-                                                        checked={false}
-                                                        onChange={() => {}}
+                                                        checked={question.correctAnswerIndexes.includes(index)}
+                                                        onChange={() => onSetCorrectAnswer(qIndex, index)}
                                                         color="default"
                                                         inputProps={{ 'aria-label': 'secondary checkbox' }}
                                                     /> :
                                                     <Radio
-                                                        checked={false}
-                                                        onChange={() => {}}
+                                                        checked={question.correctAnswerIndexes.includes(index)}
+                                                        onChange={() => onSetCorrectAnswer(qIndex, index)}
                                                         value="d"
                                                         color="default"
                                                         inputProps={{ 'aria-label': 'D' }}
@@ -125,7 +164,8 @@ export default function TestCreate(props: Props) {
                                                 <AddBox/>
                                             </IconButton>
                                             {question.choices.length !== 1 &&
-                                            <IconButton aria-label="remove" onClick={() => removeChoice(qIndex, index)}>
+                                            <IconButton aria-label="remove"
+                                                        onClick={() => onRemoveChoice(qIndex, index)}>
                                                 <Remove/>
                                             </IconButton>
                                             }
@@ -140,7 +180,7 @@ export default function TestCreate(props: Props) {
                 <IconButton aria-label="add" onClick={addQuestionHandler}>
                     <AddBox/> Add question
                 </IconButton>
-                <Button aria-label="save" onClick={onSaveHndler}>
+                <Button aria-label="save" onClick={onSaveHandler}>
                     Save
                 </Button>
             </Grid>

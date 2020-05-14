@@ -4,7 +4,7 @@ import {Route, Switch, useRouteMatch} from 'react-router-dom';
 import TestCreate from "../../components/TestCreate/TestCreate";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserState} from "../../selector/user.selector";
-import {getTestsRequest} from "../../store/test/test.action";
+import {getTestsRequest, saveTestRequest} from "../../store/test/test.action";
 import {Survey} from "../../entity/entities";
 import {getTestsState} from "../../selector/test.selector";
 
@@ -21,7 +21,7 @@ function TestsContainer() {
     const tests: Survey[] = useSelector(getTestsState);
 
     const onSaveHandler = (test: Survey) => {
-        console.log(test);
+        dispatch(saveTestRequest(test));
     };
 
     const canEdit = !!user && !!user.role && user.role.name !== 'student';

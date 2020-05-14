@@ -2,6 +2,7 @@ import {call, put, takeLatest} from 'redux-saga/effects'
 import {Survey, TestVO} from "../../entity/entities";
 import {TestActionTypes} from "./test.action";
 import {testService} from "../../service/test.service";
+import {push} from "connected-react-router";
 
 function* getTests(action: any) {
     try {
@@ -23,10 +24,11 @@ function* saveTest(action: any) {
     try {
         const test: any = {
             id: action.payload.id,
-            name: action.payload.name,
+            name: action.payload.title,
             json: JSON.stringify(action.payload.questions),
         };
         yield call(testService.createTest, test);
+        yield put(push('/home/tests'));
         yield put({type: TestActionTypes.GET_TESTS_REQUEST});
     } catch (e) {
         console.error(e);
