@@ -7,6 +7,7 @@ import {getUserState} from "../../selector/user.selector";
 import {deleteTestRequest, getTestsRequest, saveTestRequest} from "../../store/test/test.action";
 import {Survey} from "../../entity/entities";
 import {getTestsState} from "../../selector/test.selector";
+import TestExecution from "../../components/TestExecution/TestExecution";
 
 
 function TestsContainer() {
@@ -30,14 +31,21 @@ function TestsContainer() {
 
     const canEdit = !!user && !!user.role && user.role.name !== 'student';
 
+    const onCompleteTest = () => {
+
+    };
+
     return (
         <Switch>
             {canEdit &&
             <Route path={`${match.url}/create`}>
                 <TestCreate onSave={onSaveHandler}/>
             </Route>}
-            <Route path={match.url}>
+            <Route exact path={match.url}>
                 <Tests tests={tests} canEdit={canEdit} onDelete={onDeleteHandler}/>
+            </Route>
+            <Route path={`${match.url}/:id`}>
+                <TestExecution tests={tests} onComplete={onCompleteTest}/>
             </Route>
         </Switch>
     );

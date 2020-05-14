@@ -4,6 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {makeStyles} from "@material-ui/core/styles";
 import {Edit, PlayArrow} from "@material-ui/icons";
 import {Survey} from "../../entity/entities";
+import {Link} from "react-router-dom";
 
 interface Props {
     tests: Survey[];
@@ -49,8 +50,8 @@ export default function TestsList(props: Props) {
                                         </IconButton>
                                     </>
                                         :
-                                        < IconButton edge="end" aria-label="delete">
-                                            <PlayArrow/>
+                                        < IconButton edge="end" aria-label="execute">
+                                            <Link to={`tests/${item.id}`}><PlayArrow/></Link>
                                         </IconButton>
                                 }
                             </ListItemSecondaryAction>
