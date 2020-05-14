@@ -9,6 +9,7 @@ import {Survey} from "../../entity/entities";
 interface Props {
     tests: Survey[]
     canEdit: boolean;
+    onDelete: (id: number) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +33,7 @@ export default function Tests(props: Props) {
             {props.canEdit && <IconButton edge="end" aria-label="add">
                 <Link to={`${match.url}/create`}><AddBox/></Link>
             </IconButton>}
-            <TestsList tests={props.tests} canEdit={props.canEdit}/>
+            <TestsList tests={props.tests} canEdit={props.canEdit} onDelete={props.onDelete}/>
         </div>
     );
 }

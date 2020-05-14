@@ -12,3 +12,4 @@ export enum TestActionTypes {
 
 export const getTestsRequest = () => ({type: TestActionTypes.GET_TESTS_REQUEST, payload: null});
 export const saveTestRequest = (test: Survey) => ({type: TestActionTypes.SAVE_TEST_REQUEST, payload: test});
+export const deleteTestRequest = (id: number) => ({type: TestActionTypes.DELETE_TEST_REQUEST, payload: id});

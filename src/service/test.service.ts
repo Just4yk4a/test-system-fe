@@ -7,7 +7,11 @@ class TestService {
 
     createTest = (test: any) => {
         return axios.post('/tests', test);
-    }
+    };
+
+    deleteTest = (id: number) => {
+        return axios.delete('/tests/' + id);
+    };
 }
 
 export const testService = new TestService();

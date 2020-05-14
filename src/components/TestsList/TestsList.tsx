@@ -8,6 +8,7 @@ import {Survey} from "../../entity/entities";
 interface Props {
     tests: Survey[];
     canEdit: boolean;
+    onDelete: (id: number) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +43,8 @@ export default function TestsList(props: Props) {
                                         <IconButton edge="end" aria-label="edit">
                                             <Edit/>
                                         </IconButton>
-                                        < IconButton edge="end" aria-label="delete">
+                                        < IconButton edge="end" aria-label="delete"
+                                                     onClick={() => props.onDelete(item.id as number)}>
                                             <DeleteIcon/>
                                         </IconButton>
                                     </>

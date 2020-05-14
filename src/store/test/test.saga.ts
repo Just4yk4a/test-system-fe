@@ -35,9 +35,19 @@ function* saveTest(action: any) {
     }
 }
 
+function* deleteTest(action: any) {
+    try {
+        yield call(testService.deleteTest, action.payload);
+        yield put({type: TestActionTypes.GET_TESTS_REQUEST});
+    } catch (e) {
+        console.error(e);
+    }
+}
+
 function* TestSaga() {
     yield takeLatest(TestActionTypes.GET_TESTS_REQUEST, getTests);
     yield takeLatest(TestActionTypes.SAVE_TEST_REQUEST, saveTest);
+    yield takeLatest(TestActionTypes.DELETE_TEST_REQUEST, deleteTest);
 }
 
 export default TestSaga;
