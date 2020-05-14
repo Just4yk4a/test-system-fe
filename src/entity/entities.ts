@@ -32,6 +32,14 @@ export class Survey {
     questions: Question[] = [];
 }
 
+export class Class {
+    id: number | null = null;
+}
+
+export class Answer {
+    id: number | null = null;
+}
+
 export enum QuestionType {
     radio, checkbox
 }

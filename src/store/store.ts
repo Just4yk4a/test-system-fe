@@ -13,6 +13,10 @@ import {studentReducer, StudentState} from "./student/student.reducer";
 import StudentSaga from "./student/student.saga";
 import {testReducer, TestState} from "./test/test.reducer";
 import TestSaga from "./test/test.saga";
+import {answerReducer, AnswerState} from "./answer/answer.reducer";
+import {classReducer, ClassState} from "./class/class.reducer";
+import ClassSaga from "./class/class.saga";
+import AnswerSaga from "./answer/answer.saga";
 
 export const history = History.createBrowserHistory();
 
@@ -21,6 +25,8 @@ export interface State {
     studentState: StudentState;
     userState: UserState;
     testState: TestState;
+    answerState: AnswerState
+    classState: ClassState
     router: RouterState,
 }
 
@@ -29,11 +35,13 @@ export const reducers = combineReducers<State>({
     studentState: studentReducer,
     userState: userReducer,
     testState: testReducer,
+    answerState: answerReducer,
+    classState: classReducer,
     router: connectRouter(history)
 });
 
 function* sagas() {
-    yield all([TeacherSaga(), StudentSaga(), UserSaga(), TestSaga()])
+    yield all([TeacherSaga(), StudentSaga(), UserSaga(), TestSaga(), ClassSaga(), AnswerSaga()])
 }
 
 
