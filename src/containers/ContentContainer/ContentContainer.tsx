@@ -4,7 +4,7 @@ import {ExerciseOne} from "../../components/ExerciseOne";
 import StudentsContainer from "../StudentsContainer/StudentsContainer";
 import TeachersContainer from "../TeachersContainer/TeachersContainer";
 import ClassesContainer from "../ClassesContainer/ClassesContainer";
-import { Switch } from 'react-router-dom';
+import {Redirect, Switch} from 'react-router-dom';
 import TestsContainer from "../TestsContainer/TestsContainer";
 
 
@@ -19,7 +19,7 @@ function ContentContainer() {
             <Route path={`${match.url}/tests`} component={TestsContainer}/>
             <Route path={`${match.url}/exercises`} component={ExerciseOne}/>
             <Route path={match.path}>
-                <h3>Training system</h3>
+                <Redirect to={`${match.url}/tests`}/>
             </Route>
         </Switch>
     );

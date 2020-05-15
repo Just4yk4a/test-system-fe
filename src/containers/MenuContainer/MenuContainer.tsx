@@ -2,7 +2,7 @@ import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import {Group, Person} from '@material-ui/icons'
+import {ArrowForward} from '@material-ui/icons'
 import ListItemText from '@material-ui/core/ListItemText'
 import List from '@material-ui/core/List'
 import {getUserState} from "../../selector/user.selector";
@@ -25,8 +25,7 @@ export default function MenuContainer() {
                 map = [{value: 'Teachers', url: '/home/teachers'},
                     // {value: 'Classes', url: '/home/classes'},
                     {value: 'Students', url: '/home/students'},
-                    {value: 'Tests', url: '/home/tests'},
-                    {value: 'Exercises', url: '/home/exercises'}];
+                    {value: 'Tests', url: '/home/tests'}];
                 break
             }
             case 'teacher': {
@@ -53,7 +52,7 @@ export default function MenuContainer() {
     return (<List>
         {map.map((item: MenuItem, index: number) => (
             <ListItem button key={item.url} onClick={() => onClickHandler(item)}>
-                <ListItemIcon>{index % 2 === 0 ? <Person/> : <Group/>}</ListItemIcon>
+                <ListItemIcon><ArrowForward/></ListItemIcon>
                 <ListItemText primary={item.value}/>
             </ListItem>
         ))}
