@@ -18,7 +18,7 @@
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "material-table": "^1.57.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "connected-react-router": "^6.8.0",
     "google-map-react": "^1.1.7",
